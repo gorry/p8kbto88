@@ -1,0 +1,75 @@
+.program pio_tx
+.side_set 1 opt							; SideSetピンの指定
+
+.define public TX_DATA_BITS  12			; TX bits + 1(parity) - 1
+
+	pull side 1 [7]						; Pull from FIFO to OSR, SideSet to 1, wait 7 clks
+	set x, (TX_DATA_BITS) side 0 [7]	; set x TX bits, SideSet to 0, wait 7 clks(Start Bit)
+tx_loop:
+	out pins 1							; Send 1bit from OSR to GPIO
+	jmp x-- tx_loop [6]					; x--, Jump label non zero, wait 6 clks
+										; end
+
+% c-sdk {
+// pioasm.exe or https://wokwi.com/tools/pioasm to convert it.
+
+#include "hardware/clocks.h"
+
+#define OUT_PIN 4
+#define OUT_BITS pio_tx_TX_DATA_BITS
+
+static inline void pio_tx_program_init(PIO pio, uint sm, uint offset, uint out_pin, float tx_baud) {
+
+	// ステートマシンのデフォルト設定を取得
+	pio_sm_config c = pio_tx_program_get_default_config(offset);
+
+	// OUT命令用GPIOピンを設定
+	sm_config_set_out_pins(&c, out_pin, 1);
+
+	// SIDESET命令用GPIOピンを設定
+	sm_config_set_sideset_pins(&c, out_pin);
+
+	// GPIOをPIOに割り当てる(out_pin)
+	pio_gpio_init(pio, out_pin);
+
+	// PIOに設定したGPIOの向きを設定（true=out, false=in）
+	pio_sm_set_consecutive_pindirs(pio, sm, out_pin, 1, true);
+
+	// ステートマシンのビットシフト関連の設定
+	sm_config_set_out_shift(
+		&c,
+		true,		// LSB first
+		true,		  // 
+		OUT_BITS+1	// パリティ入りビット数
+	);
+
+	// FIFOを送信専用に設定
+	sm_config_set_fifo_join(&c, PIO_FIFO_JOIN_TX);
+
+	// ステートマシンの１クロックの設定
+	float div =  (float)clock_get_hz(clk_sys) / (8 * tx_baud);
+	sm_config_set_clkdiv(&c, div);
+
+	// ステートマシンを所定の設定で初期化
+	pio_sm_init(pio, sm, offset, &c);
+
+	// ステートマシンを稼働
+	pio_sm_set_enabled(pio, sm, true);
+}
+
+static void pio_tx(PIO pio, uint sm, uint c, bool even_parity) {
+	uint32_t tx = c;
+	uint32_t b = 1;
+	uint32_t parity = (even_parity ? 0 : 1);
+	for (int i = 0; i < OUT_BITS; i++) {
+		parity ^= (tx & b);
+		b <<= 1;
+		parity <<= 1;
+	}
+	tx |= parity;
+	pio_sm_put_blocking(pio, sm, tx);
+}
+
+
+%}
+
