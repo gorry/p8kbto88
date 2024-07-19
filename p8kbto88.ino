@@ -30,6 +30,17 @@
 
 // =====================================================================
 
+<<<<<<< HEAD
+// pio-txで使う値
+#define PIO_TX_PIO pio0
+#define PIO_TX_STATE_MACHINE 0
+#define PIO_TX_OUT_PIN 4
+#define PIO_TX_BAUD 20800
+
+// =====================================================================
+
+=======
+>>>>>>> origin/main
 #include "pio_tx.h"
 #include "gpiodef.h"
 #include "keyname.h"
@@ -64,6 +75,19 @@ void setup() {
 	// キーに入力がある度に本体LEDを点滅させるための処理
 	pinMode(25, OUTPUT);
 	digitalWrite(25, TEST_LED); TEST_LED = 1-TEST_LED;
+<<<<<<< HEAD
+
+	// pio-tx初期化
+	pio_tx_program_init(
+		PIO_TX_PIO,
+		PIO_TX_STATE_MACHINE,
+		pio_add_program(pio0, &pio_tx_program),
+		PIO_TX_OUT_PIN,
+		PIO_TX_BAUD
+	);
+
+=======
+>>>>>>> origin/main
 }
 
 // =====================================================================

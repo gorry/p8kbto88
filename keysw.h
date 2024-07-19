@@ -12,9 +12,14 @@ extern const KEYSW* KEYSWTBL[KB_ADR_MAX*KB_DATA_SIZE];
 #define KBBIT(a,b) ((KB_NOW[a] & (1<<b)) ? false : true)
 #define KBBIT_KANA() KBBIT(0x08,5)
 
+<<<<<<< HEAD
+extern void send88kb_push(int adr, int kbbit, bool b);
+extern bool send88kb_read(int adr, int kbbit);
+=======
 bool CAPS_TOGGLE;
 
 extern void send88kb_push(int adr, int kbbit, bool b);
+>>>>>>> origin/main
 
 // =====================================================================
 
@@ -24,8 +29,11 @@ void keysw_init(void) {
 	memset(&KB_BAK, 0xff, KB_ADR_MAX);
 	memset(&KB_NOW, 0xff, KB_ADR_MAX);
 
+<<<<<<< HEAD
+=======
 	CAPS_TOGGLE = false;
 
+>>>>>>> origin/main
 }
 
 // =====================================================================
@@ -389,8 +397,12 @@ void keysw_77(bool b) {
 
 void keysw_80(bool b) {
 	if (KBBIT_KANA()) {
+<<<<<<< HEAD
+		send88kb_push(0x0d, 2, b); // PC
+=======
 		CAPS_TOGGLE = !CAPS_TOGGLE;
 		send88kb_push(0x0a, 7, CAPS_TOGGLE); // CAPS
+>>>>>>> origin/main
 	} else {
 		send88kb_push(0x08, 0, b); // HOME
 	}
@@ -406,6 +418,15 @@ void keysw_81(bool b) {
 
 void keysw_82(bool b) {
 	if (KBBIT_KANA()) {
+<<<<<<< HEAD
+		if (b) { // OFFの時は逆順で送る
+			send88kb_push(0x08, 6, b); // SHIFT
+			send88kb_push(0x0c, 6, b); // INS
+			send88kb_push(0x08, 3, b); // INS/DEL
+		} else {
+			send88kb_push(0x08, 3, b); // INS/DEL
+			send88kb_push(0x0c, 6, b); // INS
+=======
 		if (b) { // ON/OFFで順序が変わる
 			send88kb_push(0x0c, 6, b); // INS
 			send88kb_push(0x08, 6, b); // SHIFT
@@ -413,6 +434,7 @@ void keysw_82(bool b) {
 		} else {
 			send88kb_push(0x0c, 6, b); // INS
 			send88kb_push(0x08, 3, b); // INS/DEL
+>>>>>>> origin/main
 			send88kb_push(0x08, 6, b); // SHIFT
 		}
 	} else {
@@ -422,12 +444,21 @@ void keysw_82(bool b) {
 
 void keysw_83(bool b) {
 	if (KBBIT_KANA()) {
+<<<<<<< HEAD
+		if (b) { // OFFの時は逆順で送る
+			send88kb_push(0x0c, 7, b); // DEL
+			send88kb_push(0x08, 3, b); // INS/DEL
+		} else {
+			send88kb_push(0x08, 3, b); // INS/DEL
+			send88kb_push(0x0c, 7, b); // DEL
+=======
 		if (b) { // ON/OFFで順序が変わる
 			send88kb_push(0x0c, 7, b); // DEL
 			send88kb_push(0x08, 3, b); // INS/DEL
 		} else {
 			send88kb_push(0x0c, 7, b); // DEL
 			send88kb_push(0x08, 3, b); // INS/DEL
+>>>>>>> origin/main
 		}
 	} else {
 		send88kb_push(0x08, 3, b); // INS/DEL
@@ -457,6 +488,25 @@ void keysw_90(bool b) {
 }
 
 void keysw_91(bool b) {
+<<<<<<< HEAD
+	send88kb_push(0x09, 1, b); // F1
+}
+
+void keysw_92(bool b) {
+	send88kb_push(0x09, 2, b); // F2
+}
+
+void keysw_93(bool b) {
+	send88kb_push(0x09, 3, b); // F3
+}
+
+void keysw_94(bool b) {
+	send88kb_push(0x09, 4, b); // F4
+}
+
+void keysw_95(bool b) {
+	send88kb_push(0x09, 5, b); // F5
+=======
 	if (KBBIT_KANA()) {
 		if (b) { // ON/OFFで順序が変わる
 			send88kb_push(0x0c, 0, b); // F6
@@ -534,6 +584,7 @@ void keysw_95(bool b) {
 	} else {
 		send88kb_push(0x09, 5, b); // F5
 	}
+>>>>>>> origin/main
 }
 
 void keysw_96(bool b) {
@@ -541,7 +592,20 @@ void keysw_96(bool b) {
 }
 
 void keysw_97(bool b) {
+<<<<<<< HEAD
+	if (KBBIT_KANA()) {
+		if (b) { // ONの時のみ送る
+			bool caps = send88kb_read(0x0a, 7);
+
+			// 負論理なのでそのまま送るだけで反転になる
+			send88kb_push(0x0a, 7, caps); // CAPS
+		}
+	} else {
+		send88kb_push(0x09, 7, b); // ESC
+	}
+=======
 	send88kb_push(0x09, 7, b); // ESC
+>>>>>>> origin/main
 }
 
 // --------

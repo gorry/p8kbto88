@@ -2,6 +2,8 @@
 // Copyright 2024 GORRY.
 // =====================================================================
 
+<<<<<<< HEAD
+=======
 // pio-txで使う値
 #define PIO_TX_PIO pio0
 #define PIO_TX_STATE_MACHINE 0
@@ -10,6 +12,7 @@
 
 // =====================================================================
 
+>>>>>>> origin/main
 // キーボード入力イベントを溜めておくバッファ
 #define KB_EVT_BUF_MAX 256
 typedef struct {
@@ -27,6 +30,19 @@ unsigned char KB_OUT[KB_ADR_MAX];
 
 // 初期化
 void send88kb_init(void) {
+<<<<<<< HEAD
+	KB_EVT_BUF_HEAD = 0;
+	KB_EVT_BUF_TAIL = 0;
+
+	memset(&KB_OUT, 0xff, KB_ADR_MAX);
+}
+
+// =====================================================================
+
+// キーデータを読む（負論理）
+bool send88kb_read(int adr, int kbbit) {
+	return (KB_OUT[adr] & (1<<kbbit));
+=======
 
 	// pio-tx初期化
 	pio_tx_program_init(
@@ -42,6 +58,7 @@ void send88kb_init(void) {
 	KB_EVT_BUF_TAIL = 0;
 	memset(&KB_OUT, 0xff, KB_ADR_MAX);
 	KB_OUT[0x0e] &= 0x7f; // 常に0
+>>>>>>> origin/main
 }
 
 // =====================================================================
