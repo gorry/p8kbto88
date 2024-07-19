@@ -44,7 +44,7 @@ PC-8801キーボードについては、youkan氏による以下の資料が便�
 ## 回路の解説
 回路は、大きく３つに分かれています。
 
-![20240628_p8kbto88](https://github.com/gorry/p8kbto88/assets/486696/cb9a44a0-ccce-4029-8868-2c472313688b)
+![p8kbto88_block](https://github.com/user-attachments/assets/ef2d403b-c349-4c6f-95ff-4e75b2c29f9e)
 
 ### 1. PC-8001キーマトリクスへのアドレス出力
 PC-8001キーマトリクスのA0-A9をすべてHI状態にした後、１本ずつ順にLOWにしていきます。
