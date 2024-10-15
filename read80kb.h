@@ -4,18 +4,12 @@
 
 // 初期化
 void read80kb_init() {
-<<<<<<< HEAD
-  	// アドレスピン（OUT）の準備
-=======
 	// アドレスピン（OUT）の準備
->>>>>>> origin/main
 	for (int y=0; y<KB_ADR_SIZE; y++) {
 		pinMode(GPIO_ADR[y], OUTPUT);
 		digitalWrite(GPIO_ADR[y], 1);
 	}
 
-<<<<<<< HEAD
-=======
 	// A10ピンの初期化
 	pinMode(14, OUTPUT);
 	digitalWrite(14, 0);
@@ -24,18 +18,11 @@ void read80kb_init() {
 	pinMode(15, OUTPUT);
 	digitalWrite(15, 0);
 
->>>>>>> origin/main
 	// データピン（IN）の準備。プルアップで
 	for (int x=0; x<KB_DATA_SIZE; x++) {
 		pinMode(GPIO_DATA[x], INPUT_PULLUP);
 	}
 
-<<<<<<< HEAD
-	// A10ピンの初期化
-	pinMode(GPIO_ADR_A10, OUTPUT);
-	digitalWrite(GPIO_ADR_A10, 0);
-=======
->>>>>>> origin/main
 }
 
 // =====================================================================
@@ -53,13 +40,8 @@ void read80kb() {
 		digitalWrite(GPIO_ADR[adr], 0);
 
 		// 少し待ったほうがいい気がする
-<<<<<<< HEAD
-		delay(1);
-		// delayMicroseconds(10);
-=======
 		// delay(1);
 		delayMicroseconds(100);
->>>>>>> origin/main
 
 		// データピンを読む
 		// データピンは負論理（ON=0, OFF=1）

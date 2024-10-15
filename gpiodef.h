@@ -6,44 +6,19 @@
 
 // キーボードアドレスピン（IN）の定義
 #define KB_ADR_SIZE 10
-<<<<<<< HEAD
-const unsigned char GPIO_ADR[KB_ADR_SIZE+1] = {
-	15, // GP15:Adr10
-	14, // GP14:Adr9
-	13, // GP13:Adr8
-	12, // GP12:Adr7
-	11, // GP11:Adr6
-	10, // GP10:Adr5
-	 9, // GP 9:Adr4
-	 8, // GP 8:Adr3
-	 7, // GP 7:Adr2
-	 6, // GP 6:Adr1
-   
-	 3, // GP 3:Adr0
-};
-
-#define GPIO_ADR_A10 (GPIO_ADR[KB_ADR_SIZE+0]) 
-
-
-=======
 const unsigned char GPIO_ADR[KB_ADR_SIZE] = {
-	 2, // GP 2:Adr0
-	 3, // GP 3:Adr1
-	 6, // GP 6:Adr2
-	 7, // GP 7:Adr3
-	 8, // GP 8:Adr4
-	 9, // GP 9:Adr5
-	10, // GP10:Adr6
-	11, // GP11:Adr7
-	12, // GP12:Adr8
-	13, // GP13:Adr9
-	/*
-	14, // GP14:Adr10
-	15, // GP15:Adr11
-	*/
+	15, // GP13:Adr9
+	14, // GP12:Adr8
+	13, // GP11:Adr7
+	12, // GP10:Adr6
+	11, // GP 9:Adr5
+	10, // GP 8:Adr4
+	 9, // GP 7:Adr3
+	 8, // GP 6:Adr2
+	 7, // GP 3:Adr1
+	 6, // GP 2:Adr0
 };
 
->>>>>>> origin/main
 // キーボードデータピン（OUT）の定義
 #define KB_DATA_SIZE 8
 const unsigned char GPIO_DATA[8] = {

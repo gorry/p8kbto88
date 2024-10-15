@@ -39,6 +39,7 @@ PC-8801キーボードについては、youkan氏による以下の資料が便�
 - 上矢印 → HELP
 - 右矢印 → INS
 - INS/DEL → DEL
+- F1-F5 → F6-F10
 - ESC → CAPS（トグル動作）
 
 ## 回路の解説
